@@ -11,7 +11,7 @@ name="viewport"
 content="width=device-width, initial-scale=1.0">
 
 <title>
-AI Vịt Quay
+AI Vịt Quay PRO
 </title>
 
 <link
@@ -22,16 +22,44 @@ href="style.css">
 
 <body>
 
-<div class="box">
+<div class="top">
 
 <h1>
-🦆 AI VỊT QUAY
+🦆 AI VỊT QUAY PRO
 </h1>
+
+<p>
+Quản lý thu chi thông minh
+</p>
+
+</div>
+
+<div class="dashboard">
+
+<div class="card green">
+
+<h2 id="incomeText">
+0đ
+</h2>
+
+<p>
+💰 Tổng tiền
+</p>
+
+</div>
+
+</div>
+
+<div class="box">
+
+<h2>
+➕ Nhập tiền
+</h2>
 
 <input
 id="money"
 type="number"
-placeholder="Nhập tiền">
+placeholder="Nhập số tiền">
 
 <button onclick="addMoney()">
 
@@ -39,11 +67,17 @@ placeholder="Nhập tiền">
 
 </button>
 
-<h2 id="result">
+</div>
 
-0đ
+<div class="box">
 
+<h2>
+📋 Lịch sử
 </h2>
+
+<ul id="historyList">
+
+</ul>
 
 </div>
 
