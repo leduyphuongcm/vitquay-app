@@ -1,23 +1,19 @@
-function addTransaction(){
+let total = 0;
 
-alert("Nút hoạt động 😄");
+function addMoney(){
 
-}
+let money =
+Number(
+document.getElementById(
+"money"
+).value
+);
 
-function startVoice(){
+total += money;
 
-alert("Voice hoạt động 😄");
-
-}
-
-function askGemini(){
-
-alert("AI hoạt động 😄");
-
-}
-
-function resetData(){
-
-alert("Reset hoạt động 😄");
+document.getElementById(
+"result"
+).innerText =
+total + "đ";
 
 }
