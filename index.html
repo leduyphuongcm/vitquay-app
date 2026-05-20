@@ -11,12 +11,16 @@ name="viewport"
 content="width=device-width, initial-scale=1.0">
 
 <title>
-AI Vịt Quay MAX
+AI Vịt Quay PRO
 </title>
 
 <link
 rel="stylesheet"
 href="style.css">
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -24,71 +28,160 @@ href="style.css">
 
 <body>
 
-<div class="top">
+<!-- HEADER -->
 
-<h1>
-🦆 AI VỊT QUAY MAX
-</h1>
+<div class="header">
+
+<div class="shop">
+
+<img
+src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png">
+
+<div>
+
+<h2>
+AI Vịt Quay
+</h2>
 
 <p>
-AI phân tích kinh doanh chuyên sâu
+Quản lý kinh doanh
 </p>
 
 </div>
+
+</div>
+
+<div class="header-icons">
+
+<i class="fa-solid fa-qrcode"></i>
+
+<i class="fa-regular fa-comment"></i>
+
+</div>
+
+</div>
+
+<!-- DASHBOARD -->
 
 <div class="dashboard">
 
 <div class="card green">
 
-<h2 id="incomeText">
+<i class="fa-solid fa-sack-dollar"></i>
+
+<h3 id="incomeText">
 0đ
-</h2>
+</h3>
 
 <p>
-💰 Tổng thu
+Tổng thu
 </p>
 
 </div>
 
 <div class="card red">
 
-<h2 id="expenseText">
+<i class="fa-solid fa-money-bill"></i>
+
+<h3 id="expenseText">
 0đ
-</h2>
+</h3>
 
 <p>
-💸 Tổng chi
+Tổng chi
 </p>
 
 </div>
 
 <div class="card blue">
 
-<h2 id="profitText">
+<i class="fa-solid fa-chart-line"></i>
+
+<h3 id="profitText">
 0đ
-</h2>
+</h3>
 
 <p>
-📈 Lợi nhuận
-</p>
-
-</div>
-
-<div class="card orange">
-
-<h2 id="ordersText">
-0
-</h2>
-
-<p>
-🦆 Đơn bán
+Lợi nhuận
 </p>
 
 </div>
 
 </div>
 
-<div class="box">
+<!-- MENU -->
+
+<div class="menu-grid">
+
+<div class="menu-item"
+onclick="openBox()">
+
+<i class="fa-solid fa-plus"></i>
+
+<span>
+Tạo đơn
+</span>
+
+</div>
+
+<div class="menu-item">
+
+<i class="fa-solid fa-box"></i>
+
+<span>
+Sản phẩm
+</span>
+
+</div>
+
+<div class="menu-item">
+
+<i class="fa-solid fa-chart-column"></i>
+
+<span>
+Báo cáo
+</span>
+
+</div>
+
+<div class="menu-item"
+onclick="analyzeBusiness()">
+
+<i class="fa-solid fa-brain"></i>
+
+<span>
+AI Phân tích
+</span>
+
+</div>
+
+<div class="menu-item">
+
+<i class="fa-solid fa-users"></i>
+
+<span>
+Khách hàng
+</span>
+
+</div>
+
+<div class="menu-item">
+
+<i class="fa-solid fa-warehouse"></i>
+
+<span>
+Kho hàng
+</span>
+
+</div>
+
+</div>
+
+<!-- POPUP -->
+
+<div id="popup">
+
+<div class="popup-content">
 
 <h2>
 ➕ Thêm giao dịch
@@ -125,10 +218,6 @@ Nhân viên
 </option>
 
 <option>
-Mặt bằng
-</option>
-
-<option>
 Khác
 </option>
 
@@ -141,41 +230,47 @@ placeholder="Nhập số tiền">
 
 <button onclick="addTransaction()">
 
-➕ THÊM GIAO DỊCH
+➕ THÊM
 
 </button>
 
 <button onclick="startVoice()">
 
-🎤 NHẬP GIỌNG NÓI
+🎤 GIỌNG NÓI
+
+</button>
+
+<button
+class="close-btn"
+onclick="closeBox()">
+
+Đóng
 
 </button>
 
 </div>
 
-<div class="box ai">
+</div>
+
+<!-- AI -->
+
+<div class="ai-box">
 
 <h2>
-🧠 AI PHÂN TÍCH MAX LEVEL
+🧠 AI PHÂN TÍCH
 </h2>
-
-<button onclick="analyzeBusiness()">
-
-🚀 PHÂN TÍCH KINH DOANH
-
-</button>
 
 <div id="analysisResult">
 
-</div>
+AI sẽ phân tích kinh doanh 😄
 
 </div>
 
-<div class="box">
+</div>
 
-<h2>
-📊 BIỂU ĐỒ THU CHI
-</h2>
+<!-- BIỂU ĐỒ -->
+
+<div class="chart-box">
 
 <canvas id="myChart">
 
@@ -183,27 +278,67 @@ placeholder="Nhập số tiền">
 
 </div>
 
-<div class="box">
+<!-- LỊCH SỬ -->
+
+<div class="history-box">
 
 <h2>
-📋 LỊCH SỬ
+📋 Lịch sử
 </h2>
 
 <ul id="historyList">
 
 </ul>
 
-<button onclick="resetData()">
+</div>
 
-🗑 XÓA TOÀN BỘ DỮ LIỆU
+<!-- MENU DƯỚI -->
 
-</button>
+<div class="bottom-menu">
+
+<div>
+
+<i class="fa-solid fa-house"></i>
+
+<p>
+Quản lý
+</p>
 
 </div>
 
-<script src="script.js">
+<div onclick="openBox()">
 
-</script>
+<i class="fa-solid fa-money-bill-transfer"></i>
+
+<p>
+Thu chi
+</p>
+
+</div>
+
+<div onclick="analyzeBusiness()">
+
+<i class="fa-solid fa-chart-line"></i>
+
+<p>
+Báo cáo
+</p>
+
+</div>
+
+<div>
+
+<i class="fa-solid fa-bars"></i>
+
+<p>
+Thêm
+</p>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
 
 </body>
 
