@@ -1,5 +1,5 @@
 const GEMINI_API_KEY =
-"PASTE_API_KEY_CUA_BAN";
+"AIzaSyCjr5tsQIR2miLkCC6C0Ise4I8YDzry424";
 
 let totalIncome =
 Number(
