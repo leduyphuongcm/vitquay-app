@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+AI Vịt Quay MAX
+</title>
+
+<link
+rel="stylesheet"
+href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="top">
+
+<h1>
+🦆 AI VỊT QUAY MAX
+</h1>
+
+<p>
+AI phân tích kinh doanh chuyên sâu
+</p>
+
+</div>
+
+<div class="dashboard">
+
+<div class="card green">
+
+<h2 id="incomeText">
+0đ
+</h2>
+
+<p>
+💰 Tổng thu
+</p>
+
+</div>
+
+<div class="card red">
+
+<h2 id="expenseText">
+0đ
+</h2>
+
+<p>
+💸 Tổng chi
+</p>
+
+</div>
+
+<div class="card blue">
+
+<h2 id="profitText">
+0đ
+</h2>
+
+<p>
+📈 Lợi nhuận
+</p>
+
+</div>
+
+<div class="card orange">
+
+<h2 id="ordersText">
+0
+</h2>
+
+<p>
+🦆 Đơn bán
+</p>
+
+</div>
+
+</div>
+
+<div class="box">
+
+<h2>
+➕ Thêm giao dịch
+</h2>
+
+<select id="type">
+
+<option value="thu">
+💰 Thu
+</option>
+
+<option value="chi">
+💸 Chi
+</option>
+
+</select>
+
+<select id="category">
+
+<option>
+Bán vịt
+</option>
+
+<option>
+Than
+</option>
+
+<option>
+Ship
+</option>
+
+<option>
+Nhân viên
+</option>
+
+<option>
+Mặt bằng
+</option>
+
+<option>
+Khác
+</option>
+
+</select>
+
+<input
+id="money"
+type="number"
+placeholder="Nhập số tiền">
+
+<button onclick="addTransaction()">
+
+➕ THÊM GIAO DỊCH
+
+</button>
+
+<button onclick="startVoice()">
+
+🎤 NHẬP GIỌNG NÓI
+
+</button>
+
+</div>
+
+<div class="box ai">
+
+<h2>
+🧠 AI PHÂN TÍCH MAX LEVEL
+</h2>
+
+<button onclick="analyzeBusiness()">
+
+🚀 PHÂN TÍCH KINH DOANH
+
+</button>
+
+<div id="analysisResult">
+
+</div>
+
+</div>
+
+<div class="box">
+
+<h2>
+📊 BIỂU ĐỒ THU CHI
+</h2>
+
+<canvas id="myChart">
+
+</canvas>
+
+</div>
+
+<div class="box">
+
+<h2>
+📋 LỊCH SỬ
+</h2>
+
+<ul id="historyList">
+
+</ul>
+
+<button onclick="resetData()">
+
+🗑 XÓA TOÀN BỘ DỮ LIỆU
+
+</button>
+
+</div>
+
+<script src="script.js">
+
+</script>
+
+</body>
+
+</html>
