@@ -345,12 +345,14 @@ event.results[0][0]
 
 let number = 0;
 
-// đọc số thường
+// lấy tất cả số trong câu
 
 let found =
 text.match(/\d+/g);
 
 if(found){
+
+// ghép số lại
 
 number =
 Number(
@@ -359,30 +361,45 @@ found.join("")
 
 }
 
-// hiểu "nghìn"
+// ====================
+// xử lý đơn vị
+// ====================
 
-if(
-text.includes("nghìn")
-||
-text.includes("ngàn")
-){
-
-number =
-number * 1000;
-
-}
-
-// hiểu "triệu"
+// triệu
 
 if(
 text.includes("triệu")
 ){
+
+if(number < 1000){
 
 number =
 number * 1000000;
 
 }
 
+}
+
+// nghìn / ngàn
+
+else if(
+text.includes("nghìn")
+||
+text.includes("ngàn")
+){
+
+if(number < 1000){
+
+number =
+number * 1000;
+
+}
+
+}
+
+// ====================
+// vịt
+// ====================
 
 if(
 text.includes("con")
@@ -394,6 +411,19 @@ number =
 number * 320000;
 
 }
+
+// nếu không đọc được
+
+if(!number){
+
+alert(
+"Không nghe rõ 😄"
+);
+
+return;
+
+}
+
 
 if(
 text.includes("bán")
