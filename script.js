@@ -19,6 +19,14 @@ localStorage.getItem(
 )
 ) || [];
 
+function formatMoney(number){
+
+return number.toLocaleString(
+"vi-VN"
+) + "đ";
+
+}
+
 function saveData(){
 
 localStorage.setItem(
@@ -57,16 +65,6 @@ formatMoney(
 totalIncome-totalExpense
 );
 
-let orders =
-history.filter(
-x => x.includes("💰")
-).length;
-
-document.getElementById(
-"ordersText"
-).innerText =
-orders;
-
 let list =
 document.getElementById(
 "historyList"
@@ -93,14 +91,6 @@ drawChart();
 
 }
 
-function formatMoney(number){
-
-return number.toLocaleString(
-"vi-VN"
-) + "đ";
-
-}
-
 function addTransaction(){
 
 let type =
@@ -123,7 +113,7 @@ document.getElementById(
 if(!money){
 
 alert(
-"Nhập tiền 😄"
+"Nhập số tiền 😄"
 );
 
 return;
@@ -138,17 +128,12 @@ now.toLocaleDateString(
 "vi-VN"
 );
 
-let time =
-now.getHours()
-+ ":" +
-now.getMinutes();
-
 if(type == "thu"){
 
 totalIncome += money;
 
 history.push(
-`💰 Thu +${formatMoney(money)} | ${category} | ${date} ${time}`
+`💰 Thu +${formatMoney(money)} | ${category} | ${date}`
 );
 
 }
@@ -158,7 +143,7 @@ else{
 totalExpense += money;
 
 history.push(
-`💸 Chi -${formatMoney(money)} | ${category} | ${date} ${time}`
+`💸 Chi -${formatMoney(money)} | ${category} | ${date}`
 );
 
 }
@@ -167,9 +152,162 @@ saveData();
 
 updateScreen();
 
+closeBox();
+
+}
+
+function openBox(){
+
 document.getElementById(
-"money"
-).value = "";
+"popup"
+).style.display =
+"flex";
+
+}
+
+function closeBox(){
+
+document.getElementById(
+"popup"
+).style.display =
+"none";
+
+}
+
+function analyzeBusiness(){
+
+let profit =
+totalIncome-totalExpense;
+
+let result = "";
+
+result +=
+"🧠 AI PHÂN TÍCH\n\n";
+
+result +=
+"💰 Tổng thu: "
++ formatMoney(totalIncome)
++ "\n";
+
+result +=
+"💸 Tổng chi: "
++ formatMoney(totalExpense)
++ "\n";
+
+result +=
+"📈 Lợi nhuận: "
++ formatMoney(profit)
++ "\n\n";
+
+if(profit > 10000000){
+
+result +=
+"🔥 Kinh doanh rất tốt\n";
+
+}
+
+else if(profit > 0){
+
+result +=
+"🙂 Đang có lợi nhuận\n";
+
+}
+
+else{
+
+result +=
+"⚠️ Đang lỗ\n";
+
+}
+
+let days = {};
+
+history.forEach(function(item){
+
+let match =
+item.match(
+/\d{1,2}\/\d{1,2}\/\d{4}/
+);
+
+if(!match) return;
+
+let date =
+match[0];
+
+if(!days[date]){
+
+days[date] = 0;
+
+}
+
+let money =
+item.match(
+/([\d,.]+)đ/
+);
+
+if(!money) return;
+
+money =
+Number(
+money[1]
+.replace(/\./g,"")
+.replace(/,/g,"")
+);
+
+if(item.includes("💰")){
+
+days[date] += money;
+
+}
+
+else{
+
+days[date] -= money;
+
+}
+
+});
+
+let bestDay = "";
+let bestMoney = -999999999;
+
+let worstDay = "";
+let worstMoney = 999999999;
+
+for(let day in days){
+
+if(days[day] > bestMoney){
+
+bestMoney = days[day];
+bestDay = day;
+
+}
+
+if(days[day] < worstMoney){
+
+worstMoney = days[day];
+worstDay = day;
+
+}
+
+}
+
+result +=
+"\n🔥 Bán tốt nhất:\n"
++ bestDay +
+" → "
++ formatMoney(bestMoney);
+
+result +=
+"\n\n📉 Bán yếu nhất:\n"
++ worstDay +
+" → "
++ formatMoney(worstMoney);
+
+document.getElementById(
+"analysisResult"
+).innerText =
+result;
 
 }
 
@@ -260,257 +398,54 @@ saveData();
 
 updateScreen();
 
-};
-
-}
-
-function analyzeBusiness(){
-
-let profit =
-totalIncome-totalExpense;
-
-let orders =
-history.filter(
-x => x.includes("💰")
-).length;
-
-let avg =
-orders > 0
-? Math.round(totalIncome/orders)
-: 0;
-
-let result = "";
-
-result +=
-"🧠 AI PHÂN TÍCH KINH DOANH\n\n";
-
-result +=
-"💰 Tổng thu: "
-+ formatMoney(totalIncome)
-+ "\n";
-
-result +=
-"💸 Tổng chi: "
-+ formatMoney(totalExpense)
-+ "\n";
-
-result +=
-"📈 Lợi nhuận: "
-+ formatMoney(profit)
-+ "\n";
-
-result +=
-"🦆 Tổng đơn: "
-+ orders +
-"\n";
-
-result +=
-"📊 Trung bình / đơn: "
-+ formatMoney(avg)
-+ "\n\n";
-
-// =======================
-// PHÂN TÍCH THEO NGÀY
-// =======================
-
-let dailyData = {};
-
-history.forEach(function(item){
-
-let match =
-item.match(
-/(\d{1,2}\/\d{1,2}\/\d{4})/
+alert(
+"✅ Đã thêm bằng giọng nói"
 );
-
-if(!match) return;
-
-let date =
-match[1];
-
-if(!dailyData[date]){
-
-dailyData[date] = {
-
-thu:0,
-chi:0
 
 };
 
 }
 
-let moneyMatch =
-item.match(
-/([\d,.]+)đ/
+let chart;
+
+function drawChart(){
+
+let ctx =
+document.getElementById(
+"myChart"
 );
 
-if(!moneyMatch) return;
+if(chart){
 
-let money =
-Number(
-moneyMatch[1]
-.replace(/\./g,"")
-.replace(/,/g,"")
-);
-
-if(item.includes("💰")){
-
-dailyData[date].thu += money;
+chart.destroy();
 
 }
 
-if(item.includes("💸")){
+chart =
+new Chart(ctx,{
 
-dailyData[date].chi += money;
+type:"doughnut",
+
+data:{
+
+labels:[
+"Thu",
+"Chi"
+],
+
+datasets:[{
+
+data:[
+totalIncome,
+totalExpense
+]
+
+}]
 
 }
 
 });
 
-// tìm ngày mạnh nhất
-
-let bestDay = "";
-let bestProfit = -999999999;
-
-let worstDay = "";
-let worstProfit = 999999999;
-
-for(let day in dailyData){
-
-let p =
-dailyData[day].thu
--
-dailyData[day].chi;
-
-if(p > bestProfit){
-
-bestProfit = p;
-bestDay = day;
-
 }
 
-if(p < worstProfit){
-
-worstProfit = p;
-worstDay = day;
-
-}
-
-}
-
-result +=
-"📅 PHÂN TÍCH THEO NGÀY\n\n";
-
-if(bestDay){
-
-result +=
-"🔥 Bán tốt nhất:\n";
-
-result +=
-bestDay +
-" → "
-+ formatMoney(bestProfit)
-+ "\n\n";
-
-}
-
-if(worstDay){
-
-result +=
-"📉 Bán yếu nhất:\n";
-
-result +=
-worstDay +
-" → "
-+ formatMoney(worstProfit)
-+ "\n\n";
-
-}
-
-// AI nhận xét
-
-if(profit > 10000000){
-
-result +=
-"🔥 Tháng này kinh doanh rất mạnh.\n";
-
-result +=
-"👉 Có thể mở rộng bán thêm.\n\n";
-
-}
-
-else if(profit > 0){
-
-result +=
-"🙂 Tháng này có lợi nhuận.\n";
-
-result +=
-"👉 Nên tăng quảng cáo Facebook.\n\n";
-
-}
-
-else{
-
-result +=
-"⚠️ Đang lỗ.\n";
-
-result +=
-"👉 Nên giảm chi phí.\n\n";
-
-}
-
-if(avg > 300000){
-
-result +=
-"🦆 Giá trị đơn hàng tốt.\n";
-
-}
-
-else{
-
-result +=
-"📉 Đơn hàng hơi thấp.\n";
-
-}
-
-if(totalExpense > totalIncome*0.7){
-
-result +=
-"⚠️ Chi phí đang quá cao.\n";
-
-}
-
-if(orders < 5){
-
-result +=
-"📉 Lượng khách thấp.\n";
-
-}
-
-if(orders > 20){
-
-result +=
-"🔥 Khách rất đông.\n";
-
-}
-
-result +=
-"\n🤖 GỢI Ý AI:\n";
-
-result +=
-"• Livestream giờ tối\n";
-
-result +=
-"• Đăng Facebook chiều\n";
-
-result +=
-"• Combo vịt + nước sẽ tăng doanh thu\n";
-
-result +=
-"• Khuyến mãi ship giúp tăng đơn\n";
-
-document.getElementById(
-"analysisResult"
-).innerText =
-result;
-
-}
+updateScreen();
