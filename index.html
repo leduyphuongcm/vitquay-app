@@ -1,35 +1,191 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="vi">
 
 <head>
 
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 <title>
-AI Vịt Quay
+AI Vịt Quay PRO
 </title>
 
 <link
 rel="stylesheet"
 href="style.css">
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
 
-<div class="box">
+<div class="top">
 
 <h1>
-🦆 AI VỊT QUAY
+🦆 AI VỊT QUAY PRO
 </h1>
 
+<p>
+Quản lý bán hàng thông minh
+</p>
+
+</div>
+
+<div class="dashboard">
+
+<div class="card green">
+
+<h2 id="incomeText">
+0đ
+</h2>
+
+<p>
+💰 Tổng thu
+</p>
+
+</div>
+
+<div class="card red">
+
+<h2 id="expenseText">
+0đ
+</h2>
+
+<p>
+💸 Tổng chi
+</p>
+
+</div>
+
+<div class="card blue">
+
+<h2 id="profitText">
+0đ
+</h2>
+
+<p>
+📈 Lợi nhuận
+</p>
+
+</div>
+
+</div>
+
+<div class="box">
+
+<h2>
+➕ Thêm giao dịch
+</h2>
+
+<select id="type">
+
+<option value="thu">
+💰 Thu
+</option>
+
+<option value="chi">
+💸 Chi
+</option>
+
+</select>
+
+<select id="category">
+
+<option>
+Bán vịt
+</option>
+
+<option>
+Than
+</option>
+
+<option>
+Ship
+</option>
+
+<option>
+Nước ngọt
+</option>
+
+<option>
+Khác
+</option>
+
+</select>
+
 <input
-placeholder="Nhập tiền">
+type="number"
+id="money"
+placeholder="Nhập số tiền">
 
-<button onclick="hello()">
+<button onclick="addTransaction()">
 
-BẤM THỬ
+➕ THÊM GIAO DỊCH
 
 </button>
+
+<button onclick="startVoice()">
+
+🎤 NHẬP BẰNG GIỌNG NÓI
+
+</button>
+
+</div>
+
+<div class="box">
+
+<h2>
+🤖 Gemini AI
+</h2>
+
+<input
+type="text"
+id="aiInput"
+placeholder="Ví dụ: Hôm nay bán ít quá">
+
+<button onclick="askGemini()">
+
+🧠 HỎI AI
+
+</button>
+
+<p id="aiResult">
+
+</p>
+
+</div>
+
+<div class="box">
+
+<h2>
+📋 Lịch sử
+</h2>
+
+<ul id="historyList">
+
+</ul>
+
+<button onclick="resetData()">
+
+🗑 XÓA DỮ LIỆU
+
+</button>
+
+</div>
+
+<div class="box">
+
+<h2>
+📊 Biểu đồ
+</h2>
+
+<canvas id="myChart">
+
+</canvas>
 
 </div>
 
