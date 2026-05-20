@@ -343,21 +343,46 @@ event.results[0][0]
 .transcript
 .toLowerCase();
 
-let number =
-text.match(/\d+/);
+let number = 0;
 
-if(!number){
+// đọc số thường
 
-alert(
-"Không nghe rõ 😄"
+let found =
+text.match(/\d+/g);
+
+if(found){
+
+number =
+Number(
+found.join("")
 );
-
-return;
 
 }
 
+// hiểu "nghìn"
+
+if(
+text.includes("nghìn")
+||
+text.includes("ngàn")
+){
+
 number =
-Number(number[0]);
+number * 1000;
+
+}
+
+// hiểu "triệu"
+
+if(
+text.includes("triệu")
+){
+
+number =
+number * 1000000;
+
+}
+
 
 if(
 text.includes("con")
