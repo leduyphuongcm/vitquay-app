@@ -789,6 +789,22 @@ await response.json();
 
 console.log(data);
 
+console.log(data);
+
+if(
+!data.choices
+){
+
+document.getElementById(
+"aiChatResult"
+).innerText =
+"❌ " +
+JSON.stringify(data);
+
+return;
+
+}
+
 let reply =
 data.choices[0]
 .message.content;
