@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="vi">
 
 <head>
@@ -10,262 +11,134 @@ name="viewport"
 content="width=device-width, initial-scale=1.0">
 
 <title>
-AI Quản Lý Vịt Quay PRO
+Sổ Thu Chi PRO
 </title>
 
+<link
+rel="stylesheet"
+href="style.css">
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<style>
-
-body{
-
-font-family:Arial;
-background:#fff7ed;
-margin:0;
-padding:15px;
-
-}
-
-h1{
-
-text-align:center;
-font-size:42px;
-color:darkred;
-
-}
-
-.box{
-
-background:white;
-padding:25px;
-margin-bottom:20px;
-border-radius:20px;
-box-shadow:0 0 15px #ddd;
-
-}
-
-h2{
-
-font-size:32px;
-
-}
-
-input,
-select{
-
-width:100%;
-padding:18px;
-font-size:26px;
-margin-top:10px;
-margin-bottom:15px;
-border-radius:12px;
-border:1px solid #ccc;
-box-sizing:border-box;
-
-}
-
-button{
-
-width:100%;
-padding:20px;
-font-size:28px;
-margin-top:10px;
-border:none;
-border-radius:15px;
-background:orange;
-color:white;
-font-weight:bold;
-
-}
-
-.money{
-
-font-size:38px;
-font-weight:bold;
-margin-top:15px;
-
-}
-
-.green{
-
-color:green;
-
-}
-
-.red{
-
-color:red;
-
-}
-
-.blue{
-
-color:blue;
-
-}
-
-li{
-
-font-size:24px;
-margin-bottom:10px;
-
-}
-
-#aiResult{
-
-font-size:26px;
-margin-top:15px;
-white-space:pre-wrap;
-
-}
-
-canvas{
-
-max-width:100%;
-
-}
-
-</style>
 
 </head>
 
 <body>
 
-<h1>
-🦆 AI VỊT QUAY PRO
+<!-- HEADER -->
+
+<div class="top">
+
+<p class="month">
+Tháng này
+</p>
+
+<h1 id="profitText">
+0đ
 </h1>
 
-<div class="box">
-
-<h2>
-💰 Giao dịch
-</h2>
-
-<select id="type">
-
-<option value="thu">
-💰 Thu
-</option>
-
-<option value="chi">
-💸 Chi
-</option>
-
-</select>
-
-<select id="category">
-
-<option>
-Bán vịt
-</option>
-
-<option>
-Than
-</option>
-
-<option>
-Ship
-</option>
-
-<option>
-Nước ngọt
-</option>
-
-<option>
-Khác
-</option>
-
-</select>
-
-<input
-type="number"
-id="money"
-placeholder="Nhập số tiền">
-
-<button onclick="addTransaction()">
-➕ THÊM GIAO DỊCH
-</button>
-
-<button onclick="startVoice()">
-🎤 NHẬP BẰNG GIỌNG NÓI
-</button>
-
-</div>
-
-<div class="box">
-
-<h2>
-📊 Thống kê
-</h2>
-
-<div
-class="money green"
-id="incomeText">
-
-Tổng thu: 0đ
-
-</div>
-
-<div
-class="money red"
-id="expenseText">
-
-Tổng chi: 0đ
-
-</div>
-
-<div
-class="money blue"
-id="profitText">
-
-Lãi: 0đ
-
-</div>
-
-</div>
-
-<div class="box">
-
-<h2>
-🤖 Gemini AI
-</h2>
-
-<input
-type="text"
-id="aiInput"
-placeholder="Ví dụ: Hôm nay bán ít quá">
-
-<button onclick="askGemini()">
-🧠 HỎI GEMINI
-</button>
-
-<p id="aiResult">
-
+<p class="sub">
+Tổng tài sản
 </p>
 
 </div>
 
-<div class="box">
+<!-- BALANCE -->
 
-<h2>
-📋 Lịch sử
+<div class="balance-wrap">
+
+<div class="balance-card">
+
+<div>
+
+<p>
+💵 Tiền mặt
+</p>
+
+<h2 id="cashText">
+0đ
 </h2>
 
-<ul id="historyList">
+</div>
 
-</ul>
+</div>
 
-<button onclick="resetDay()">
-🔄 XÓA DỮ LIỆU HÔM NAY
+<div class="balance-card">
+
+<div>
+
+<p>
+🏦 BIDV
+</p>
+
+<h2 id="bankText">
+0đ
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- QUICK ACTION -->
+
+<div class="quick-actions">
+
+<button onclick="openPopup('thu')">
+
+💰 Thu
+
+</button>
+
+<button onclick="openPopup('chi')">
+
+💸 Chi
+
+</button>
+
+<button onclick="startVoice()">
+
+🎤 Giọng nói
+
 </button>
 
 </div>
 
-<div class="box">
+<!-- AI -->
 
-<h2>
-📈 Biểu đồ
-</h2>
+<div class="ai-box">
+
+<div class="ai-top">
+
+<h3>
+🧠 AI Phân tích
+</h3>
+
+<button
+class="mini-btn"
+onclick="analyzeBusiness()">
+
+Xem
+
+</button>
+
+</div>
+
+<div id="analysisResult">
+
+AI sẽ phân tích thu chi 😄
+
+</div>
+
+</div>
+
+<!-- CHART -->
+
+<div class="chart-box">
 
 <canvas id="myChart">
 
@@ -273,550 +146,73 @@ placeholder="Ví dụ: Hôm nay bán ít quá">
 
 </div>
 
-<script>
+<!-- HISTORY -->
 
-// THAY API KEY CỦA BẠN
+<div class="history">
 
-const GEMINI_API_KEY =
-"AIzaSyCjr5tsQIR2miLkCC6C0Ise4I8YDzry424";
+<div class="history-top">
 
-// DỮ LIỆU
+<h3>
+📋 Giao dịch
+</h3>
 
-let totalIncome =
-Number(
-localStorage.getItem(
-"income"
-)
-) || 0;
+</div>
 
-let totalExpense =
-Number(
-localStorage.getItem(
-"expense"
-)
-) || 0;
+<ul id="historyList">
 
-let history =
-JSON.parse(
-localStorage.getItem(
-"history"
-)
-) || [];
+</ul>
 
-// SAVE
+</div>
 
-function saveData(){
+<!-- FLOAT BUTTON -->
 
-localStorage.setItem(
-"income",
-totalIncome
-);
+<div
+class="float-btn"
+onclick="openPopup('thu')">
 
-localStorage.setItem(
-"expense",
-totalExpense
-);
++
 
-localStorage.setItem(
-"history",
-JSON.stringify(history)
-);
+</div>
 
-}
+<!-- POPUP -->
 
-// THÊM GIAO DỊCH
+<div id="popup">
 
-function addTransaction(){
+<div class="popup-content">
 
-let type =
-document.getElementById(
-"type"
-).value;
+<h2 id="popupTitle">
+Thêm giao dịch
+</h2>
 
-let category =
-document.getElementById(
-"category"
-).value;
+<input
+id="money"
+type="number"
+placeholder="Số tiền">
 
-let money =
-Number(
-document.getElementById(
-"money"
-).value
-);
+<input
+id="note"
+type="text"
+placeholder="Ghi chú">
 
-if(!money){
+<button onclick="addTransaction()">
 
-alert(
-"Nhập số tiền"
-);
+Lưu giao dịch
 
-return;
+</button>
 
-}
+<button
+class="close-btn"
+onclick="closePopup()">
 
-let now =
-new Date();
+Đóng
 
-let time =
-now.getHours() +
-":" +
-now.getMinutes();
+</button>
 
-let text =
-"[" + time + "] ";
+</div>
 
-if(type == "thu"){
+</div>
 
-totalIncome += money;
-
-text +=
-"💰 Thu +" +
-money +
-"đ (" +
-category +
-")";
-
-}
-
-else{
-
-totalExpense += money;
-
-text +=
-"💸 Chi -" +
-money +
-"đ (" +
-category +
-")";
-
-}
-
-history.push(text);
-
-saveData();
-
-updateScreen();
-
-document.getElementById(
-"money"
-).value = "";
-
-}
-
-// UPDATE
-
-function updateScreen(){
-
-document.getElementById(
-"incomeText"
-).innerText =
-"Tổng thu: " +
-totalIncome +
-"đ";
-
-document.getElementById(
-"expenseText"
-).innerText =
-"Tổng chi: " +
-totalExpense +
-"đ";
-
-let profit =
-totalIncome - totalExpense;
-
-document.getElementById(
-"profitText"
-).innerText =
-"Lãi: " +
-profit +
-"đ";
-
-let list =
-document.getElementById(
-"historyList"
-);
-
-list.innerHTML = "";
-
-history.forEach(function(item){
-
-let li =
-document.createElement("li");
-
-li.innerText = item;
-
-list.appendChild(li);
-
-});
-
-drawChart();
-
-}
-
-// RESET
-
-function resetDay(){
-
-if(
-confirm(
-"Xóa dữ liệu?"
-)
-){
-
-totalIncome = 0;
-totalExpense = 0;
-history = [];
-
-saveData();
-
-updateScreen();
-
-}
-
-}
-
-// GIỌNG NÓI
-
-function startVoice(){
-
-const SpeechRecognition =
-window.SpeechRecognition ||
-window.webkitSpeechRecognition;
-
-if(!SpeechRecognition){
-
-alert(
-"Thiết bị không hỗ trợ voice"
-);
-
-return;
-
-}
-
-const recognition =
-new SpeechRecognition();
-
-recognition.lang =
-"vi-VN";
-
-recognition.continuous =
-false;
-
-recognition.interimResults =
-false;
-
-document.getElementById(
-"aiResult"
-).innerText =
-"🎤 Đang nghe...";
-
-recognition.start();
-
-recognition.onresult =
-function(event){
-
-let text =
-event.results[0][0]
-.transcript
-.toLowerCase();
-
-document.getElementById(
-"aiResult"
-).innerText =
-"🎤 " + text;
-
-// sửa lỗi phát âm
-
-text = text
-.replace("tu","thu")
-.replace("tư","thu")
-.replace("chị","chi")
-.replace("ghi","chi");
-
-// hiểu bán vịt
-
-if(
-text.includes("bán")
-||
-text.includes("vịt")
-){
-
-text =
-"thu " + text;
-
-}
-
-// tìm số
-
-let number =
-text.match(/\d+/);
-
-if(!number){
-
-document.getElementById(
-"aiResult"
-).innerText +=
-" ❌ Không thấy số";
-
-return;
-
-}
-
-number =
-Number(number[0]);
-
-// tự tính vịt
-
-if(
-text.includes("con")
-&&
-text.includes("vịt")
-){
-
-number =
-number * 320000;
-
-}
-
-// THU
-
-if(
-text.includes("thu")
-){
-
-totalIncome += number;
-
-history.push(
-"🎤 Thu +" +
-number +
-"đ"
-);
-
-}
-
-// CHI
-
-else if(
-text.includes("chi")
-){
-
-totalExpense += number;
-
-history.push(
-"🎤 Chi -" +
-number +
-"đ"
-);
-
-}
-
-saveData();
-
-updateScreen();
-
-document.getElementById(
-"aiResult"
-).innerText +=
-" ✅ Đã thêm";
-
-};
-
-recognition.onerror =
-function(event){
-
-document.getElementById(
-"aiResult"
-).innerText =
-"❌ " + event.error;
-
-};
-
-}
-
-// GEMINI AI
-
-async function askGemini(){
-
-let userText =
-document.getElementById(
-"aiInput"
-).value;
-
-if(!userText){
-
-alert(
-"Nhập câu hỏi"
-);
-
-return;
-
-}
-
-document.getElementById(
-"aiResult"
-).innerText =
-"🤖 Gemini đang suy nghĩ...";
-
-try{
-
-const response =
-await fetch(
-
-"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=" + GEMINI_API_KEY,
-
-{
-
-method:"POST",
-
-headers:{
-
-"Content-Type":
-"application/json"
-
-},
-
-body:JSON.stringify({
-
-contents:[{
-
-role:"user",
-
-parts:[{
-
-text:userText
-
-}]
-
-}]
-
-})
-
-}
-
-);
-
-const data =
-await response.json();
-
-console.log(data);
-
-// DEBUG
-
-if(data.error){
-
-document.getElementById(
-"aiResult"
-).innerText =
-"❌ " +
-data.error.message;
-
-return;
-
-}
-
-// LẤY TEXT AI
-
-let aiText =
-data?.candidates?.[0]
-?.content?.parts?.[0]
-?.text;
-
-if(aiText){
-
-document.getElementById(
-"aiResult"
-).innerText =
-aiText;
-
-}
-
-else{
-
-document.getElementById(
-"aiResult"
-).innerText =
-"❌ Không có phản hồi";
-
-console.log(data);
-
-}
-
-}
-
-catch(error){
-
-console.log(error);
-
-document.getElementById(
-"aiResult"
-).innerText =
-"❌ Gemini lỗi";
-
-}
-
-}
-
-catch(error){
-
-console.log(error);
-
-document.getElementById(
-"aiResult"
-).innerText =
-"❌ Gemini lỗi";
-
-}
-
-}
-
-// BIỂU ĐỒ
-
-let chart;
-
-function drawChart(){
-
-let ctx =
-document.getElementById(
-"myChart"
-);
-
-if(chart){
-
-chart.destroy();
-
-}
-
-chart =
-new Chart(ctx,{
-
-type:'pie',
-
-data:{
-
-labels:[
-'Thu',
-'Chi'
-],
-
-datasets:[{
-
-data:[
-totalIncome,
-totalExpense
-]
-
-}]
-
-}
-
-});
-
-}
-
-updateScreen();
-
-</script>
+<script src="script.js"></script>
 
 </body>
 
