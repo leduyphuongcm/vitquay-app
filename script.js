@@ -731,6 +731,80 @@ bankMoney
 }
 
 // ======================
+// CLEAR DATA
+// ======================
+
+function clearData(){
+
+let confirmDelete =
+confirm(
+"Xóa toàn bộ dữ liệu?"
+);
+
+if(!confirmDelete){
+
+return;
+
+}
+
+localStorage.clear();
+
+totalIncome = 0;
+totalExpense = 0;
+bankMoney = 0;
+history = [];
+
+updateScreen();
+
+alert(
+"✅ Đã xóa dữ liệu"
+);
+
+}
+
+// ======================
+// ADJUST MONEY
+// ======================
+
+function adjustMoney(){
+
+let cash =
+prompt(
+"Nhập số dư tiền mặt"
+);
+
+if(cash !== null){
+
+totalIncome =
+Number(cash);
+
+totalExpense = 0;
+
+}
+
+let bank =
+prompt(
+"Nhập số dư BIDV"
+);
+
+if(bank !== null){
+
+bankMoney =
+Number(bank);
+
+}
+
+saveData();
+
+updateScreen();
+
+alert(
+"✅ Đã cập nhật số dư"
+);
+
+}
+
+// ======================
 // START
 // ======================
 
