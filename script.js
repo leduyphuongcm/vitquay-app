@@ -728,7 +728,7 @@ headers:{
 body:JSON.stringify({
 
 model:
-"llama3-70b-8192",
+"llama-3.3-70b-versatile",
 
 messages:[
 
