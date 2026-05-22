@@ -29,6 +29,13 @@ localStorage.getItem(
 let currentType = "thu";
 
 // ======================
+// GROQ API
+// ======================
+
+const GROQ_API_KEY =
+"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";
+
+// ======================
 // FORMAT
 // ======================
 
@@ -69,7 +76,7 @@ JSON.stringify(history)
 }
 
 // ======================
-// UPDATE
+// UPDATE SCREEN
 // ======================
 
 function updateScreen(){
@@ -261,7 +268,7 @@ window.webkitSpeechRecognition;
 if(!SpeechRecognition){
 
 alert(
-"iPhone chưa hỗ trợ 😄"
+"Thiết bị chưa hỗ trợ 😄"
 );
 
 return;
@@ -462,7 +469,7 @@ alert(
 }
 
 // ======================
-// AI
+// AI PHÂN TÍCH
 // ======================
 
 function analyzeBusiness(){
@@ -493,129 +500,185 @@ result +=
 + formatMoney(total)
 + "\n\n";
 
-// ======================
-// DAILY ANALYSIS
-// ======================
-
-let days = {};
-
-history.forEach(function(item){
-
-let match =
-item.match(
-/\d{1,2}\/\d{1,2}\/\d{4}/
-);
-
-if(!match) return;
-
-let date =
-match[0];
-
-if(!days[date]){
-
-days[date] = 0;
-
-}
-
-let money =
-item.match(
-/([\d,.]+)đ/
-);
-
-if(!money) return;
-
-money =
-Number(
-money[1]
-.replace(/\./g,"")
-.replace(/,/g,"")
-);
-
-if(item.includes("💰")){
-
-days[date] += money;
-
-}
-
-if(item.includes("💸")){
-
-days[date] -= money;
-
-}
-
-});
-
-let bestDay = "";
-let bestMoney = -999999999;
-
-let worstDay = "";
-let worstMoney = 999999999;
-
-for(let day in days){
-
-if(days[day] > bestMoney){
-
-bestMoney = days[day];
-bestDay = day;
-
-}
-
-if(days[day] < worstMoney){
-
-worstMoney = days[day];
-worstDay = day;
-
-}
-
-}
-
-if(bestDay){
-
-result +=
-"🔥 Bán tốt nhất:\n"
-+ bestDay +
-" → "
-+ formatMoney(bestMoney)
-+ "\n\n";
-
-}
-
-if(worstDay){
-
-result +=
-"📉 Bán yếu nhất:\n"
-+ worstDay +
-" → "
-+ formatMoney(worstMoney)
-+ "\n\n";
-
-}
-
 if(total > 10000000){
 
 result +=
-"🔥 Dòng tiền đang khá mạnh.";
+"🔥 Tình hình tài chính tốt.\n";
 
 }
 
 else if(total > 0){
 
 result +=
-"🙂 Tài chính hiện ổn.";
+"🙂 Dòng tiền đang ổn.\n";
 
 }
 
 else{
 
 result +=
-"⚠️ Nên kiểm soát chi tiêu.";
+"⚠️ Cần kiểm soát chi tiêu.\n";
 
 }
+
+result +=
+"\n💡 Gợi ý:\n";
+
+result +=
+"• Theo dõi ngày bán mạnh\n";
+
+result +=
+"• Giảm chi phí không cần thiết\n";
+
+result +=
+"• Tăng livestream cuối tuần 😄";
 
 document.getElementById(
 "analysisResult"
 ).innerText =
 result;
+
+}
+
+// ======================
+// GROQ AI CHAT
+// ======================
+
+async function askAI(){
+
+let question =
+document.getElementById(
+"aiInput"
+).value;
+
+if(!question){
+
+alert(
+"Nhập câu hỏi 😄"
+);
+
+return;
+
+}
+
+document.getElementById(
+"aiChatResult"
+).innerText =
+"🤖 AI đang suy nghĩ...";
+
+try{
+
+const response =
+await fetch(
+
+"https://api.groq.com/openai/v1/chat/completions",
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":
+"application/json",
+
+Authorization:
+`Bearer ${GROQ_API_KEY}`
+
+},
+
+body:JSON.stringify({
+
+model:
+"llama-3.3-70b-versatile",
+
+messages:[
+
+{
+
+role:"system",
+
+content:
+`
+Bạn là trợ lý tài chính cá nhân.
+
+Hãy:
+- phân tích thu chi
+- phân tích kinh doanh
+- trả lời ngắn gọn
+- trả lời tiếng Việt
+`
+
+},
+
+{
+
+role:"user",
+
+content:
+`
+Tiền mặt:
+${totalIncome-totalExpense}
+
+BIDV:
+${bankMoney}
+
+Lịch sử:
+${history.join("\n")}
+
+Câu hỏi:
+${question}
+`
+
+}
+
+]
+
+})
+
+}
+
+);
+
+const data =
+await response.json();
+
+console.log(data);
+
+// ERROR
+
+if(data.error){
+
+document.getElementById(
+"aiChatResult"
+).innerText =
+"❌ " +
+data.error.message;
+
+return;
+
+}
+
+// SUCCESS
+
+document.getElementById(
+"aiChatResult"
+).innerText =
+data.choices[0]
+.message.content;
+
+}
+
+catch(error){
+
+console.log(error);
+
+document.getElementById(
+"aiChatResult"
+).innerText =
+"❌ AI lỗi";
+
+}
 
 }
 
@@ -670,163 +733,5 @@ bankMoney
 // ======================
 // START
 // ======================
-
-// ======================
-// GROQ AI
-// ======================
-
-const GROQ_API_KEY =
-"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";
-
-// ======================
-// AI CHAT
-// ======================
-
-async function askAI(){
-
-let question =
-document.getElementById(
-"aiInput"
-).value;
-
-if(!question){
-
-alert(
-"Nhập câu hỏi 😄"
-);
-
-return;
-
-}
-
-document.getElementById(
-"aiChatResult"
-).innerText =
-"🤖 AI đang suy nghĩ...";
-
-try{
-
-const response =
-await fetch(
-
-"https://api.groq.com/openai/v1/chat/completions",
-
-{
-
-method:"POST",
-
-headers:{
-
-"Content-Type":
-"application/json",
-
-"Authorization":
-"Bearer " + GROQ_API_KEY
-
-},
-
-body:JSON.stringify({
-
-model:
-"llama-3.3-70b-versatile",
-
-messages:[
-
-{
-
-role:"system",
-
-content:
-`
-Bạn là trợ lý tài chính cá nhân.
-
-Hãy:
-- phân tích thu chi
-- phân tích kinh doanh
-- nhận xét ngày bán tốt
-- nhận xét ngày bán yếu
-- đưa lời khuyên ngắn gọn
-- trả lời tiếng Việt
-`
-
-},
-
-{
-
-role:"user",
-
-content:
-`
-Dữ liệu hiện tại:
-
-Tiền mặt:
-${totalIncome-totalExpense}
-
-BIDV:
-${bankMoney}
-
-Lịch sử:
-${history.join("\n")}
-
-Câu hỏi:
-${question}
-`
-
-}
-
-],
-
-temperature:0.7
-
-})
-
-}
-
-);
-
-const data =
-await response.json();
-
-console.log(data);
-
-console.log(data);
-
-if(
-!data.choices
-){
-
-document.getElementById(
-"aiChatResult"
-).innerText =
-"❌ " +
-JSON.stringify(data);
-
-return;
-
-}
-
-let reply =
-data.choices[0]
-.message.content;
-
-document.getElementById(
-"aiChatResult"
-).innerText =
-reply;
-
-}
-
-catch(error){
-
-console.log(error);
-
-document.getElementById(
-"aiChatResult"
-).innerText =
-"❌ AI lỗi";
-
-}
-
-}
 
 updateScreen();
